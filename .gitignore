@@ -10,3 +10,6 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+.vscode
+
+aws_cost_explorer_exporter
