@@ -46,19 +46,11 @@ func main() {
 			},
 			Granularity: aws.String("MONTHLY"),
 			GroupBy: []*costexplorer.GroupDefinition{
-<<<<<<< HEAD
 				{
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("SERVICE"),
 				},
 				{
-=======
-				&costexplorer.GroupDefinition{
-					Type: aws.String("DIMENSION"),
-					Key:  aws.String("SERVICE"),
-				},
-				&costexplorer.GroupDefinition{
->>>>>>> 4512840... Initial commit. Works for monthly for this calendar year
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("LINKED_ACCOUNT"),
 				},
@@ -85,7 +77,6 @@ func main() {
 	}
 	for _, p := range results {
 		for _, g := range p.Groups {
-<<<<<<< HEAD
 			acctID := *g.Keys[1]
 			serviceName := *g.Keys[0]
 			fname := acctMap[acctID]
@@ -93,15 +84,6 @@ func main() {
 				fname = acctID
 			}
 			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
-=======
-			acctId := *g.Keys[1]
-			serviceName := *g.Keys[0]
-			fname := acctMap[acctId]
-			if fname == "" {
-				fname = acctId
-			}
-			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctId, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
->>>>>>> 4512840... Initial commit. Works for monthly for this calendar year
 		}
 	}
 }
