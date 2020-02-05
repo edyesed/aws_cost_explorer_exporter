@@ -26,8 +26,13 @@ func main() {
 	acctMap := make(map[string]string)
 
 	osvc := organizations.New(sess)
+<<<<<<< HEAD
 	oresult, err := osvc.ListAccounts(&organizations.ListAccountsInput{})
         // We try and keep track of friendly names for accounts
+=======
+	oresult, _ := osvc.ListAccounts(&organizations.ListAccountsInput{})
+	// We try and keep track of friendly names for accounts
+>>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 	for _, acct := range oresult.Accounts {
 		acctMap[*acct.Id] = *acct.Name
 	}
@@ -46,11 +51,19 @@ func main() {
 			},
 			Granularity: aws.String("MONTHLY"),
 			GroupBy: []*costexplorer.GroupDefinition{
+<<<<<<< HEAD
 				&costexplorer.GroupDefinition{
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("SERVICE"),
 				},
 				&costexplorer.GroupDefinition{
+=======
+				{
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("SERVICE"),
+				},
+				{
+>>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("LINKED_ACCOUNT"),
 				},
@@ -77,6 +90,7 @@ func main() {
 	}
 	for _, p := range results {
 		for _, g := range p.Groups {
+<<<<<<< HEAD
 			acctId := *g.Keys[1]
 			serviceName := *g.Keys[0]
 			fname := acctMap[acctId]
@@ -84,6 +98,15 @@ func main() {
 				fname = acctId
 			}
 			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctId, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
+=======
+			acctID := *g.Keys[1]
+			serviceName := *g.Keys[0]
+			fname := acctMap[acctID]
+			if fname == "" {
+				fname = acctID
+			}
+			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
+>>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 		}
 	}
 }

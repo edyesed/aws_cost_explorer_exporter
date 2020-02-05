@@ -2,6 +2,7 @@ module github.com/edyesed/aws_cost_explorer_exporter
 
 go 1.13
 
+<<<<<<< HEAD
 require (
 	github.com/aws/aws-sdk-go v1.25.15
 	github.com/cosiner/argv v0.0.1 // indirect
@@ -20,3 +21,6 @@ require (
 	golang.org/x/sys v0.0.0-20191010194322-b09406accb47 // indirect
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
+=======
+require github.com/aws/aws-sdk-go v1.28.9
+>>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
