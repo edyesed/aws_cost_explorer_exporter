@@ -11,8 +11,5 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 .vscode
-<<<<<<< HEAD
-=======
 
 aws_cost_explorer_exporter
->>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
