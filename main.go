@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -11,7 +13,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/organizations"
 )
 
+func lookbackMonths(lbmonths int) time.Time {
+	now := time.Now()
+	endDate := now.AddDate(0, -1*lbmonths, 0)
+	return endDate
+}
+
 func main() {
+	lbMonths := flag.Int("lookbackmonths", 1, "number of months to look back")
+	flag.Parse()
 	metrics := []string{
 		"BlendedCost",
 		"UnblendedCost",
@@ -36,13 +46,16 @@ func main() {
 	ctx := context.Background()
 	var results []*costexplorer.ResultByTime
 
+	startDate := lookbackMonths(*lbMonths)
+	endDate := time.Now()
+
 	// pagination handling
 	var paginationToken string = ""
 	for {
 		params := &costexplorer.GetCostAndUsageInput{
 			TimePeriod: &costexplorer.DateInterval{
-				Start: aws.String("2019-07-03"),
-				End:   aws.String("2020-02-03"),
+				Start: aws.String(startDate.Format("2006-01") + "-01"),
+				End:   aws.String(endDate.Format("2006-01") + "-01"),
 			},
 			Granularity: aws.String("MONTHLY"),
 			GroupBy: []*costexplorer.GroupDefinition{
