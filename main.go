@@ -26,13 +26,8 @@ func main() {
 	acctMap := make(map[string]string)
 
 	osvc := organizations.New(sess)
-<<<<<<< HEAD
-	oresult, err := osvc.ListAccounts(&organizations.ListAccountsInput{})
-        // We try and keep track of friendly names for accounts
-=======
 	oresult, _ := osvc.ListAccounts(&organizations.ListAccountsInput{})
 	// We try and keep track of friendly names for accounts
->>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 	for _, acct := range oresult.Accounts {
 		acctMap[*acct.Id] = *acct.Name
 	}
@@ -46,24 +41,16 @@ func main() {
 	for {
 		params := &costexplorer.GetCostAndUsageInput{
 			TimePeriod: &costexplorer.DateInterval{
-				Start: aws.String("2019-01-01"),
-				End:   aws.String("2019-10-17"),
+				Start: aws.String("2019-07-03"),
+				End:   aws.String("2020-02-03"),
 			},
 			Granularity: aws.String("MONTHLY"),
 			GroupBy: []*costexplorer.GroupDefinition{
-<<<<<<< HEAD
-				&costexplorer.GroupDefinition{
-					Type: aws.String("DIMENSION"),
-					Key:  aws.String("SERVICE"),
-				},
-				&costexplorer.GroupDefinition{
-=======
 				{
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("SERVICE"),
 				},
 				{
->>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("LINKED_ACCOUNT"),
 				},
@@ -90,15 +77,6 @@ func main() {
 	}
 	for _, p := range results {
 		for _, g := range p.Groups {
-<<<<<<< HEAD
-			acctId := *g.Keys[1]
-			serviceName := *g.Keys[0]
-			fname := acctMap[acctId]
-			if fname == "" {
-				fname = acctId
-			}
-			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctId, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
-=======
 			acctID := *g.Keys[1]
 			serviceName := *g.Keys[0]
 			fname := acctMap[acctID]
@@ -106,7 +84,6 @@ func main() {
 				fname = acctID
 			}
 			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
->>>>>>> 9d84fa52b46e8f05f0db714a1b04407a7626963d
 		}
 	}
 }
