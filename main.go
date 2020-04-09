@@ -57,16 +57,48 @@ func main() {
 				Start: aws.String(startDate.Format("2006-01") + "-01"),
 				End:   aws.String(endDate.Format("2006-01") + "-01"),
 			},
-			Granularity: aws.String("MONTHLY"),
+			Granularity: aws.String("DAILY"),
 			GroupBy: []*costexplorer.GroupDefinition{
 				{
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("SERVICE"),
 				},
-				{
+				/* {
 					Type: aws.String("DIMENSION"),
 					Key:  aws.String("LINKED_ACCOUNT"),
 				},
+
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("AZ"),
+					},
+				*/
+				{
+					Type: aws.String("DIMENSION"),
+					Key:  aws.String("INSTANCE_TYPE"),
+				},
+				/*
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("OPERATION"),
+					},
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("USAGE_TYPE"),
+					},
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("USAGE_TYPE_GROUP"),
+					},
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("PURCHASE_TYPE"),
+					},
+					{
+						Type: aws.String("DIMENSION"),
+						Key:  aws.String("RECORD_TYPE"),
+					},
+				*/
 			},
 			Metrics: aws.StringSlice(metrics),
 		}
@@ -96,7 +128,7 @@ func main() {
 			if fname == "" {
 				fname = acctID
 			}
-			fmt.Printf("%s | %s | %s | %s | %s | %s\n", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount)
+			fmt.Printf("%s | %s | %s | %s | %s | %s | %s | %s \n", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount, *g.Metrics["BlendedCost"].Amount, *g.Metrics["UsageQuantity"].Amount)
 		}
 	}
 }
