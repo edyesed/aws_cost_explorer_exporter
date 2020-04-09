@@ -96,7 +96,7 @@ func main() {
 			if fname == "" {
 				fname = acctID
 			}
-			fmt.Println(fmt.Sprintf("%s | %s | %s | %s | %s | %s", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount))
+			fmt.Printf("%s | %s | %s | %s | %s | %s\n", *p.TimePeriod.Start, *p.TimePeriod.End, acctID, fname, serviceName, *g.Metrics["UnblendedCost"].Amount)
 		}
 	}
 }
