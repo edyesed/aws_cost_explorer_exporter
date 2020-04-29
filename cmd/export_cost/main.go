@@ -11,13 +11,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/costexplorer"
 	"github.com/aws/aws-sdk-go/service/organizations"
-)
 
-func lookbackMonths(lbmonths int) time.Time {
-	now := time.Now()
-	endDate := now.AddDate(0, -1*lbmonths, 0)
-	return endDate
-}
+	cexp "github.com/edyesed/aws_cost_explorer_exporter/internal/pkg/costexplore"
+)
 
 func main() {
 	lbMonths := flag.Int("lookbackmonths", 1, "number of months to look back")
@@ -46,7 +42,7 @@ func main() {
 	ctx := context.Background()
 	var results []*costexplorer.ResultByTime
 
-	startDate := lookbackMonths(*lbMonths)
+	startDate := cexp.LookbackMonths(*lbMonths, time.Now())
 	endDate := time.Now()
 
 	// pagination handling
